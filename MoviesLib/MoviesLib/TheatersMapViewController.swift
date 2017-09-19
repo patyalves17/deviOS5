@@ -2,7 +2,7 @@
 //  TheatersMapViewController.swift
 //  MoviesLib
 //
-//  Created by Eric Brito.
+//  Created by Eric Brito on 27/03/17.
 //  Copyright © 2017 EricBrito. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 class TheatersMapViewController: UIViewController {
-    
+
     @IBOutlet weak var mapview: MKMapView!
     
     //Array que irá conter nossos pontos de interesse
@@ -58,20 +58,20 @@ class TheatersMapViewController: UIViewController {
             
             //Analisamos o status da autorização. Caso ainda não tenha autorizado, solicitamos
             switch CLLocationManager.authorizationStatus() {
-            case .authorizedAlways, .authorizedWhenInUse:
-                print("Usuário já autorizou o acesso à sua localização")
-            case .denied:
-                print("Usuário negou o acesso à localização")
-            case .notDetermined:
-                locationManager.requestAlwaysAuthorization()    //Solicitando autorização
-            case .restricted:
-                print("Este device não está habilitado a usar geolocalização")
-            }
+                case .authorizedAlways, .authorizedWhenInUse:
+                    print("Usuário já autorizou o acesso à sua localização")
+                case .denied:
+                    print("Usuário negou o acesso à localização")
+                case .notDetermined:
+                    locationManager.requestAlwaysAuthorization()    //Solicitando autorização
+                case .restricted:
+                    print("Este device não está habilitado a usar geolocalização")
+                }
         } else {
             print("Você não possui os serviços de localização habilitados nesse device")
         }
     }
-    
+
     //Método que fará a leitura e parse do XML
     func loadXML() {
         //Recuperando URL de acesso ao arquivo theaters.xml e criando XMLParser
@@ -121,7 +121,7 @@ class TheatersMapViewController: UIViewController {
                 for step in route.steps {
                     print("Em \(step.distance) metros, \(step.instructions)")
                 }
-                
+
                 //Adicionando a rota acima das ruas (abaixo dos nomes de rua)
                 //Uma rota é um objeto Overlay. Recuperamos este overlay através da polylina da rota,
                 //que é um vetor contendo todo o traçado da mesma.
@@ -170,18 +170,18 @@ extension TheatersMapViewController: XMLParserDelegate {
             //Dependendo de qual seja o elemento atual, inserimos seu conteúdo nas respectivas
             //propriedades do Theater
             switch currentElement {
-            case "name":
-                theater.name = content
-            case "address":
-                theater.address = content
-            case "latitude":
-                theater.latitude = Double(content)!
-            case "longitude":
-                theater.longitude = Double(content)!
-            case "url":
-                theater.url = content
-            default:
-                break
+                case "name":
+                    theater.name = content
+                case "address":
+                    theater.address = content
+                case "latitude":
+                    theater.latitude = Double(content)!
+                case "longitude":
+                    theater.longitude = Double(content)!
+                case "url":
+                    theater.url = content
+                default:
+                    break
             }
         }
     }
@@ -191,7 +191,7 @@ extension TheatersMapViewController: XMLParserDelegate {
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "Theater" { theaters.append(theater) }
     }
-    
+
     //Método que é chamado ao término do parse do XML
     func parserDidEndDocument(_ parser: XMLParser) {
         
@@ -253,7 +253,7 @@ extension TheatersMapViewController: MKMapViewDelegate {
             }
             return annotationView
             
-            //Caso a annotation seja do tipo MKPointAnnotation, trabalhamos seu visual
+        //Caso a annotation seja do tipo MKPointAnnotation, trabalhamos seu visual
         }  else if annotation is MKPointAnnotation {
             
             //Tentando recuperar uma reutilizável através do identificador "POI"
@@ -271,7 +271,7 @@ extension TheatersMapViewController: MKMapViewDelegate {
         }
         return annotationView
     }
-    
+
     //Método chamado quando usuário toca em um callout
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
@@ -305,13 +305,13 @@ extension TheatersMapViewController: CLLocationManagerDelegate {
     
     //Este método é chamado sempre que é recebido ou alterado o status de autorização
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
+    
         //Caso o usuário tenha autorizado, mostramos a sua lozalização no mapa
         switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            mapview.showsUserLocation = true
-        default:
-            break
+            case .authorizedAlways, .authorizedWhenInUse:
+                mapview.showsUserLocation = true
+            default:
+                break
         }
     }
     

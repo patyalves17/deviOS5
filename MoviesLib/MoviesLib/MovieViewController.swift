@@ -2,14 +2,14 @@
 //  ViewController.swift
 //  MoviesLib
 //
-//  Created by Eric.
+//  Created by Eric on 06/03/17.
 //  Copyright © 2017 EricBrito. All rights reserved.
 //
 
 import UIKit
 
 class MovieViewController: UIViewController {
-    
+
     // MARK: IBOutlets
     @IBOutlet weak var ivPoster: UIImageView!
     @IBOutlet weak var lbTitle: UILabel!
@@ -23,19 +23,16 @@ class MovieViewController: UIViewController {
     var movie: Movie!
     
     // MARK: Super Methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //Alimentando as IBOutlets com as informações dos filmes
+        //ivPoster.image = UIImage(named: movie.imageWide)
         lbTitle.text = movie.title
+        lbGenre.text = movie.categoriesLabel
         lbDuration.text = movie.duration
         lbScore.text = "⭐️ \(movie.rating)/10"
         tvSinopsis.text = movie.summary
-        if let categories = movie.categories {
-            lbGenre.text = categories.map({($0 as! Category).name!}).joined(separator: " | ")
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -49,3 +46,8 @@ class MovieViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 }
+
+
+
+
+

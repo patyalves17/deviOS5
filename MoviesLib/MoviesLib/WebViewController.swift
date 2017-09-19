@@ -2,18 +2,18 @@
 //  WebViewController.swift
 //  MoviesLib
 //
-//  Created by Eric Brito.
+//  Created by Eric Brito on 27/03/17.
 //  Copyright © 2017 EricBrito. All rights reserved.
 //
 
 import UIKit
 
 class WebViewController: UIViewController {
-    
+
     @IBOutlet weak var loading: UIActivityIndicatorView!
     @IBOutlet weak var webView: UIWebView!
     var url: String!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.scrollView.bounces = true           //Define se a webView "quica" ou não
@@ -22,7 +22,7 @@ class WebViewController: UIViewController {
         webView.loadRequest(request)                //Efetuando a requisição na webView
         webView.delegate = self                     //Esta classe será a delegate da WebView
     }
-    
+
     @IBAction func runJS(_ sender: UIBarButtonItem) {
         
         //O método abaixo recebe comandos Javascript em formato de String e executa na WebView
@@ -36,7 +36,7 @@ class WebViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
+
 }
 
 //Implementando o protocolo UIWebViewDelegate
@@ -44,7 +44,7 @@ extension WebViewController: UIWebViewDelegate {
     
     //Método que define se uma requisição deve ou não ser executada
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        
+
         //Caso a url da requisição contenha a palavra "ads", impedimos sua execução
         if request.url!.absoluteString.range(of: "ads") != nil { return false }
         return true

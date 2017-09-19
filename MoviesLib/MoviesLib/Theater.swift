@@ -2,7 +2,7 @@
 //  Theater.swift
 //  MoviesLib
 //
-//  Created by Eric Brito.
+//  Created by Eric Brito on 27/03/17.
 //  Copyright © 2017 EricBrito. All rights reserved.
 //
 
@@ -24,7 +24,7 @@ class Theater {
         self.longitude = longitude
         self.url = url
     }
-    
+
     init() {
         
     }
