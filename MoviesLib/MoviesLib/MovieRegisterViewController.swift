@@ -78,12 +78,56 @@ class MovieRegisterViewController: UIViewController {
             context.delete(movie)
         }
         
-        
-        
-        
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    @IBAction func addPoster(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Selecionar poster", message: "De onde você quer escolher o porter?", preferredStyle: .actionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            let cameraAction = UIAlertAction(title:"Camera", style: .default, handler: { (actions) in
+                self.selectPicture(sourceType: .camera)
+            })
+            alert.addAction(cameraAction)
+        }
+        
+        
+        let libraryAction = UIAlertAction(title:"Biblioteca de fotos", style: .default, handler: { (actions) in
+            self.selectPicture(sourceType: .photoLibrary)
+        })
+        alert.addAction(libraryAction)
+        
+        
+        let photosAction = UIAlertAction(title:"Album de fotos", style: .default, handler: { (actions) in
+            self.selectPicture(sourceType: .savedPhotosAlbum)
+        })
+        alert.addAction(photosAction)
+        
+        let cancelAction = UIAlertAction(title:"Cancelar", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
 
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func selectPicture(sourceType: UIImagePickerControllerSourceType){
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = sourceType
+        imagePicker.delegate=self
+        present(imagePicker, animated: true, completion: nil)
+
+    }
+    
+}
+
+extension MovieRegisterViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String:AnyObject]) {
+        ivPoster.image = image
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 
